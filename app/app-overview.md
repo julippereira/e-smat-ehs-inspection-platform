@@ -61,13 +61,53 @@ E-SMAT supports:
 
 ---
 
-## Main User Journey 
+## Complete User Application Journey
 
-The user starts the inspection by identifying the operational location. 
-
-The application progressively filters the available options until the inspected location is fully identified. Based on the selected site and location, E-SMAT evaluates the applicable business rules and loads the appropriate SMAT, EMAT, or ESMAT questionnaire. 
-
-During the inspection, the user can register responses and related information. The inspection may either be temporarily saved for later completion or validated and submitted as a final record. 
+```text
+Open E-SMAT
+      ↓
+Detect Device or Browser Language
+      ↓
+Load the Interface Automatically
+      ├── Brazilian Portuguese
+      └── Argentine Spanish
+      ↓
+Allow Manual Language Switching
+      ↓
+Select Create SMAT / ESMAT
+      ↓
+Enter Inspection Information
+      ↓
+Select the Inspected Location
+      ↓
+Site
+  → Segment
+  → Business Unit / Area
+  → Line
+  → Workstation
+      ↓
+Apply Cascading Filters
+      ↓
+Validate Required Fields
+      ↓
+Evaluate Site and Questionnaire Rules
+      ↓
+Determine SMAT or ESMAT
+      ↓
+Load the Applicable Questionnaire
+      ↓
+Register Safe and Unsafe Observations
+      ↓
+Complete the Complementary Questions
+      ↓
+Validate the Inspection Record
+      ↓
+Submit the Inspection
+      ↓
+Display the Success Confirmation
+      ↓
+Return to the Home Screen
+```
 
 ---
 
