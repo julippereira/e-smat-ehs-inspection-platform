@@ -1,0 +1,38 @@
+﻿translation_key,pt_br,es_ar
+action_create_emat,Criar EMAT,Crear EMAT
+action_create_smat,Criar SMAT,Crear SMAT
+field_shift,Turno,Turno
+field_contract_type,Contrato,Contrato
+field_activity_type,Atividade,Actividad
+field_workstation,Posto,Puesto
+field_line,Linha,Línea
+field_business_unit_area,BU / Área,BU / Área
+field_segment,Segmento,Segmento
+field_observer_id,Sua Matrícula,Su Legajo
+field_job_role,Cargo,Cargo
+field_site,Planta,Planta
+field_observed_people,Pessoa(s) Observada(s),Persona(s) Observada(s)
+action_clear,Limpar,Limpiar
+action_next,Próximo,Siguiente
+action_back,Voltar,Volver
+question_unsafe_condition,Pergunte ao operador se ele identificou alguma condição insegura:,Consulte al operador si identificó alguna condición insegura:
+instruction_describe_if_yes,"Se sim, descreva:","En caso afirmativo, describa:"
+question_safety_tag_opened,Houve abertura de Tag?,¿Se emitió alguna Tag?
+instruction_safety_tag_number,"Se sim, informe o número da Tag:","En caso afirmativo, indique el número de la Tag:"
+question_near_miss,Pergunte ao operador se houve algum quase acidente:,Consulte al operador si ocurrió algún cuasi accidente:
+action_submit,Enviar,Enviar
+role_safety_representative,Capitão de Segurança,Capitán de Seguridad
+role_ehs,EHS,EHS
+role_manager,Gerente,Gerente
+role_operator,Operador,Operador
+role_plant_manager,Plant Manager,Plant Manager
+role_supervisor,Supervisor,Supervisor
+role_team_leader,Team Leader,Team Leader
+shift_administrative,ADM,Administrativo
+shift_first,Primeiro,Primer turno
+shift_second,Segundo,Segundo turno
+shift_third,Terceiro,Tercer turno
+activity_routine,Rotineira,Rutinaria
+activity_non_routine,Não-rotineira,No rutinaria
+contract_internal_employee,Empregado interno,Empleado interno
+contract_contractor,Terceiro,Contratista
