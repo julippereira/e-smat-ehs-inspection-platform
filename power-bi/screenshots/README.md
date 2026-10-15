@@ -2,9 +2,11 @@
 
 This folder contains screenshots of the public E-SMAT Power BI report built with synthetic data.
 
-The images document the visible report pages and the hidden drill-through pages without exposing production records, employee information, internal locations, or confidential identifiers.
+The images document the visible dashboard pages, hidden drill-through pages, and semantic model without exposing production records, real employee information, internal locations, credentials, or confidential identifiers.
 
-## Recommended Files
+---
+
+## Folder Structure
 
 ```text
 screenshots/
@@ -20,9 +22,11 @@ screenshots/
 └── 09-data-model.png
 ```
 
+---
+
 ## Screenshot Index
 
-| File | Report page | Visibility | Purpose |
+| File | Report page or view | Visibility | Purpose |
 |---|---|---|---|
 | `01-overview.png` | Visão Geral | Visible | Executive KPIs, act classifications, themes, plants, and monthly trends |
 | `02-records.png` | Registros | Visible | Inspection records by operational hierarchy and time |
@@ -30,59 +34,96 @@ screenshots/
 | `04-people.png` | Pessoas | Visible | Analyses by observer and observed-person registrations |
 | `05-job-roles.png` | Cargo | Visible | Indicators by job role and synthetic employee |
 | `06-record-search.png` | Consultar | Visible | Detailed inspection search and record-level filters |
-| `07-drill-through-record.png` | DT_Registro | Hidden | Inspection context and question-level details |
-| `08-drill-through-employee.png` | DT_Matricula | Hidden | Observed-person history and related indicators |
-| `09-data-model.png` | Model view | Internal documentation | Semantic model tables, relationships, and cardinalities |
+| `07-drill-through-record.png` | DT_Registro | Hidden | Inspection context, complementary information, and question-level details |
+| `08-drill-through-employee.png` | DT_Matricula | Hidden | Observed-person history, related observers, categories, and act indicators |
+| `09-data-model.png` | Model view | Documentation | Implemented semantic model, cardinalities, and active or inactive relationships |
 
-## Capture Guidelines
+---
 
-Before capturing each image:
+## Documentation Usage
 
-1. Confirm that the report is connected only to the synthetic mock data;
-2. Clear temporary selections that are not relevant to the page example;
-3. Use a consistent report-page zoom level;
-4. Keep the complete page visible whenever possible;
-5. Avoid showing Power BI Desktop account information or local file paths;
-6. Confirm that employee names and registrations are synthetic;
-7. Confirm that no production workspace, URL, catalog, or schema name is visible;
-8. Capture drill-through pages using a synthetic selected record or registration;
-9. Keep hidden pages hidden in the final published report;
-10. Export images as PNG for consistent rendering on GitHub.
+The main Power BI README references representative screenshots, including the overview page and semantic model.
 
-## File Naming
+```markdown
+![E-SMAT overview dashboard](screenshots/01-overview.png)
+```
 
-Use lowercase file names with hyphens:
+```markdown
+![E-SMAT Power BI data model](screenshots/09-data-model.png)
+```
+
+The model screenshot is also referenced directly in:
 
 ```text
-01-overview.png
-02-records.png
-03-observed-acts.png
+power-bi/data-model.md
 ```
 
-The numeric prefix preserves the report navigation order when the files are displayed alphabetically.
+The visible and hidden report-page screenshots support the page-by-page documentation in:
 
-## README Usage
-
-The main Power BI README can show selected screenshots using relative paths:
-
-```markdown
-![Overview dashboard](screenshots/01-overview.png)
+```text
+power-bi/dashboard-pages.md
 ```
 
-```markdown
-![Power BI data model](screenshots/09-data-model.png)
+---
+
+## Report Pages
+
+### Visible pages
+
+```text
+Visão Geral
+Registros
+Atos Observados
+Pessoas
+Cargo
+Consultar
 ```
 
-The complete screenshot set does not need to be embedded in the main README. The main README should prioritize the overview page, the model diagram, and links to the detailed documentation.
+### Hidden drill-through pages
+
+```text
+DT_Registro
+DT_Matricula
+```
+
+### Model documentation
+
+```text
+Power BI Model view
+```
+
+---
 
 ## Privacy
 
-All screenshots in this folder must use synthetic data only. Screenshots must not expose:
+All screenshots use synthetic data. The public images do not contain:
 
 - Real employee names or registrations;
 - Production inspection records;
 - Internal plant or operational location names;
 - Corporate email addresses;
-- Production URLs, workspaces, catalogs, or schemas;
+- Production URLs or workspace names;
+- Catalog, schema, or internal table names;
 - Confidential questionnaire content;
-- Credentials, tokens, or local file paths.
+- Credentials or access tokens;
+- Local file paths;
+- Power BI account or tenant information.
+
+---
+
+## Related Documentation
+
+```text
+../README.md
+../dashboard-pages.md
+../data-model.md
+../measures.md
+../key-validation-report.md
+```
+
+- `README.md`: overall Power BI portfolio summary;
+- `dashboard-pages.md`: page-by-page report documentation;
+- `data-model.md`: semantic model and relationships;
+- `measures.md`: DAX calculations;
+- `key-validation-report.md`: mock-data key and relationship validation;
+- `screenshots/README.md`: screenshot inventory and documentation references.
