@@ -22,6 +22,14 @@ The model contains:
 
 ## Model Diagram
 
+The following screenshot shows the semantic model implemented in Power BI, including the tables, relationship cardinalities, and active or inactive filter paths used by the public report.
+
+![Power BI data model](screenshots/09-data-model.png)
+
+> The screenshot is captured directly from Power BI Desktop after the mock data sources and relationships are configured. The textual diagram below provides an accessible and repository-friendly representation of the same model.
+
+### Textual representation
+
 ```text
                                       d_questionario
                                       [Id_Questao]
