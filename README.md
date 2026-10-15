@@ -185,9 +185,178 @@ Curated Analytics Dataset
             ↓
 Power BI Dashboard
 Hourly Scheduled Refresh
+```
+
+---
+
+## Data Flow
+
+1. Inspection requirements
+
+Safety and environmental requirements are predefined by the responsible business area and associated with the applicable sites, locations, methodologies, and questionnaires.
+
+2. Data collection
+
+Users access the bilingual Power Apps application and identify the location to be inspected.
+
+3. Form selection
+
+The cascade filtering mechanism evaluates the selected location and directs the user to the appropriate EMAT, SMAT, or ESMAT questionnaire.
+
+4. Operational storage
+
+Completed inspections and temporary records are stored in structured SharePoint Lists.
+
+5. Data ingestion
+
+Inspection records and related reference data are ingested into Azure Databricks.
+
+6. Data transformation
+
+Python-based processes clean, standardize, validate, and combine data from the operational lists.
+
+7. Analytical modeling
+
+The transformed records are organized into curated datasets designed for analytical consumption.
+
+8. Reporting
+
+The curated data feeds an interactive Power BI dashboard with an hourly scheduled refresh.
+
+---
+
+## Key Features
+- Bilingual interface in Brazilian Portuguese and Argentine Spanish;
+- Standardized multi-site inspection process;
+- Support for EMAT, SMAT, and ESMAT methodologies;
+- Site-specific questionnaires;
+- Dynamic questionnaire routing;
+- Cascade filtering by site and inspected location;
+- Rules-based navigation;
+- Conditional display of inspection requirements;
+- Temporary save functionality;
+- Centralized storage in SharePoint Lists;
+- Automated data ingestion;
+- Python-based data cleaning and transformation;
+- Analytics-ready data modeling;
+- Interactive Power BI reporting;
+- Hourly dashboard refresh;
+- Anonymized and synthetic portfolio datasets.
+
+---
+
+## Technologies
+
+- Microsoft Power Apps;
+- Microsoft SharePoint Online;
+- Azure Databricks;
+- Python;
+- Power BI;
+- Power Query;
+- DAX.
+
+---
+
+## Skills Demonstrated
+
+### Application development
+
+- Low-code application design;
+- Bilingual interface development;
+- Dynamic forms;
+- Cascading filters;
+- Conditional navigation;
+- Input validation;
+- State and record management.
+
+### Data engineering
+
+- Data ingestion;
+- Python-based transformation;
+- Data cleaning and standardization;
+- Business-rule implementation;
+- Data quality validation;
+- Analytical dataset preparation.
+
+
+### Business intelligence
+
+- Dimensional data modeling;
+- KPI development;
+- DAX measures;
+- Interactive dashboard design;
+- Scheduled data refresh;
+- Multi-site performance monitoring.
+
+### Business analysis
+
+- Requirements gathering;
+- Translation of operational requirements into application rules;
+- Multi-site process standardization;
+- Stakeholder-oriented solution design;
+- EHS process analysis;
+- Multilingual and cross-regional implementation.
+
+---
+
+## Repository Structure
+
 
 ```
----
+e-smat-ehs-inspection-platform/
+│
+├── README.md
+├── LICENSE
+├── .gitignore
+│
+├── app/
+│   ├── app-overview.md
+│   ├── navigation-logic.md
+│   ├── cascade-filtering.md
+│   ├── temporary-save.md
+│   ├── localization.md
+│   └── screens/
+│
+├── data/
+│   ├── sample/
+│   │   ├── sample_inspections.csv
+│   │   ├── sample_requirements.csv
+│   │   ├── sample_locations.csv
+│   │   └── sample_questionnaires.csv
+│   ├── data-dictionary.md
+│   └── README.md
+│
+├── notebooks/
+│   ├── 01_data_ingestion.py
+│   ├── 02_data_cleaning.py
+│   ├── 03_data_transformation.py
+│   ├── 04_data_quality.py
+│   └── 05_analytics_dataset.py
+│
+├── power-bi/
+│   ├── dashboard-overview.md
+│   ├── data-model.md
+│   ├── measures.md
+│   └── screenshots/
+│
+├── architecture/
+│   ├── solution-architecture.png
+│   ├── application-flow.png
+│   └── data-flow.md
+│
+├── documentation/
+│   ├── business-rules.md
+│   ├── inspection-methodologies.md
+│   ├── localization-strategy.md
+│   ├── privacy-and-anonymization.md
+│   └── technical-decisions.md
+│
+└── assets/
+    ├── app-preview.png
+    └── dashboard-preview.png
+```
+
+--- 
 
 ## Data Privacy and Anonymization
 
