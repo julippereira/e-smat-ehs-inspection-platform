@@ -164,7 +164,7 @@ Localized interface content is maintained through a SharePoint reference list.
 
 Each translation record associates an application element with its Portuguese and Spanish values.
 
-A simplified public structure could contain:
+The simplified public structure contains:
 
 ```text
 translation_key
@@ -184,8 +184,6 @@ button_submit    | Enviar     | Enviar     | Active
 option_yes       | Sim        | Sí         | Active
 option_no        | Não        | No         | Active
 ```
-
-The public repository should use generalized translation keys and synthetic examples rather than production identifiers or proprietary terminology.
 
 ---
 
@@ -417,7 +415,7 @@ When a saved inspection is resumed, the application can display the record accor
 
 The language used during the original entry should not create a separate inspection or change the meaning of stored answers.
 
-Temporary-record behavior is documented in [`temporary-save.md`](temporary-save.md).
+Temporary-record behavior is documented in [`state-persistence.md`](state-persistence.md).
 
 ---
 
@@ -491,7 +489,7 @@ Any production translation update must follow the applicable governance, termino
 - [`app-overview.md`](app-overview.md) provides the application-level context;
 - [`navigation-logic.md`](navigation-logic.md) documents screen transitions and language controls in the navigation flow;
 - [`cascade-filtering.md`](cascade-filtering.md) documents location dependencies and questionnaire routing;
-- [`temporary-save.md`](temporary-save.md) documents how inspections in progress are preserved and restored;
+- [`state-persistence.md`](state-persistence.md) documents how inspections in progress are preserved and restored;
 - [`screenshots/`](screenshots/) contains anonymized or reconstructed examples of the bilingual interface.
 
 ---
