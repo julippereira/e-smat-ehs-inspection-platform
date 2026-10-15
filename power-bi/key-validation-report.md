@@ -1,0 +1,68 @@
+# Power BI Mock Data Key Validation
+
+## Result
+
+- Overall status: **PASS**
+- Checks executed: **31**
+- Passed: **31**
+- Failed: **0**
+- Blocking failures: **0**
+
+## Row Counts
+
+| Table | Rows |
+|---|---:|
+| `d_cabecalho` | 72 |
+| `f_formulario` | 952 |
+| `d_questionario` | 119 |
+| `d_classificacao` | 1,904 |
+| `d_calendario` | 365 |
+| `d_lista_matriculas` | 93 |
+
+## Checks
+
+| Check | Area | Severity | Status | Details |
+|---|---|---|---|---|
+| `KEY001` | d_cabecalho[Titulo] | ERROR | **PASS** | rows=72; blank_keys=0; duplicate_keys=0 |
+| `KEY002` | d_cabecalho[ChaveUnica] | ERROR | **PASS** | rows=72; blank_keys=0; duplicate_keys=0 |
+| `KEY003` | f_formulario[ChaveUnica] | ERROR | **PASS** | rows=952; blank_keys=0; duplicate_keys=0 |
+| `KEY004` | d_questionario[Titulo] | ERROR | **PASS** | rows=119; blank_keys=0; duplicate_keys=0 |
+| `KEY005` | d_questionario[Id_Questao] | ERROR | **PASS** | rows=119; blank_keys=0; duplicate_keys=0 |
+| `KEY006` | d_classificacao[ChaveClassificacao] | ERROR | **PASS** | rows=1904; blank_keys=0; duplicate_keys=0 |
+| `KEY007` | d_calendario[id_data] | ERROR | **PASS** | rows=365; blank_keys=0; duplicate_keys=0 |
+| `KEY008` | d_lista_matriculas[Matricula] | ERROR | **PASS** | rows=93; blank_keys=0; duplicate_keys=0 |
+| `KEY009` | d_lista_matriculas[OrdemMatricula] | ERROR | **PASS** | rows=93; blank_keys=0; duplicate_keys=0 |
+| `KEY010` | d_cabecalho key equivalence | ERROR | **PASS** | Titulo equals ChaveUnica in 72/72 rows |
+| `REL001` | d_cabecalho[Titulo] 1:* f_formulario[Titulo] | ERROR | **PASS** | orphan_fact_rows=0; headers_without_responses=0; dimension_keys=72; fact_rows=952 |
+| `REL002` | d_questionario[Id_Questao] 1:* f_formulario[ID_Questao] | ERROR | **PASS** | orphan_fact_rows=0; unused_question_keys=0; dimension_keys=119; fact_rows=952 |
+| `REL003` | Question context consistency | ERROR | **PASS** | missing_context=0; theme_mismatches=0 |
+| `REL004` | f_formulario[ChaveUnica] 1:* d_classificacao[ChaveUnica] | ERROR | **PASS** | orphan_classification_rows=0; responses_without_classification=0; keys_not_having_two_rows=0; keys_without_safe_and_unsafe=0 |
+| `REL005` | Classification quantity reconciliation | ERROR | **PASS** | mismatched_rows=0; safe_total=1481; unsafe_total=341 |
+| `REL006` | d_calendario[id_data] 1:* d_cabecalho[Data] | ERROR | **PASS** | orphan_date_rows=0; distinct_fact_dates=68; calendar_rows=365 |
+| `REL007` | d_calendario[id_data] 1:* f_formulario[Data] | ERROR | **PASS** | orphan_date_rows=0; distinct_fact_dates=68; calendar_rows=365 |
+| `REL008` | d_calendario[id_data] 1:* d_classificacao[Data] | ERROR | **PASS** | orphan_date_rows=0; distinct_fact_dates=68; calendar_rows=365 |
+| `REL009` | d_lista_matriculas[Matricula] 1:* d_cabecalho[MatriculaObservador] | ERROR | **PASS** | orphan_header_rows=0; distinct_used=18; dimension_rows=93; dimension_values_not_used_in_this_role=75 |
+| `REL010` | d_lista_matriculas[Matricula] 1:* d_cabecalho[MatriculaObservado] | INFO | **PASS** | orphan_header_rows=0; distinct_used=72; dimension_rows=93; dimension_values_not_used_in_this_role=21 |
+| `REL011` | d_lista_matriculas[Matricula] 1:* d_cabecalho[MatriculaObservado2] | INFO | **PASS** | orphan_header_rows=0; distinct_used=18; dimension_rows=93; dimension_values_not_used_in_this_role=75 |
+| `REL012` | d_lista_matriculas[Matricula] 1:* d_cabecalho[MatriculaObservado3] | INFO | **PASS** | orphan_header_rows=0; distinct_used=6; dimension_rows=93; dimension_values_not_used_in_this_role=87 |
+| `CTX001` | Header to response context | ERROR | **PASS** | mismatched_rows=0 across Data, Planta, TipoAuditoria |
+| `CTX002` | Response to classification context | ERROR | **PASS** | mismatched_rows=0 |
+| `BLK001` | f_formulario[Titulo] required key | ERROR | **PASS** | blank_values=0 |
+| `BLK002` | f_formulario[ID_Questao] required key | ERROR | **PASS** | blank_values=0 |
+| `BLK003` | d_classificacao[ChaveUnica] required key | ERROR | **PASS** | blank_values=0 |
+| `BLK004` | d_classificacao[Titulo] required key | ERROR | **PASS** | blank_values=0 |
+| `BLK005` | d_classificacao[ID_Questao] required key | ERROR | **PASS** | blank_values=0 |
+| `BLK006` | d_cabecalho[Data] required key | ERROR | **PASS** | blank_values=0 |
+| `BLK007` | d_lista_matriculas[Planta] required key | ERROR | **PASS** | blank_values=0 |
+
+## Recommended Relationships
+
+```text
+d_calendario[id_data]       1 ─── * d_cabecalho[Data]
+d_cabecalho[Titulo]         1 ─── * f_formulario[Titulo]
+d_questionario[Id_Questao]  1 ─── * f_formulario[ID_Questao]
+f_formulario[ChaveUnica]    1 ─── * d_classificacao[ChaveUnica]
+d_lista_matriculas[Matricula] 1 ─── * d_cabecalho[MatriculaObservador]
+```
+
+The additional calendar and employee-role relationships may remain inactive to avoid ambiguous filter paths.
