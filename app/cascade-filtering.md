@@ -598,7 +598,7 @@ The public portfolio documents these design considerations without exposing inte
 
 - [`app-overview.md`](app-overview.md) provides the application-level context;
 - [`navigation-logic.md`](navigation-logic.md) documents screen transitions and workflow branching;
-- [`temporary-save.md`](temporary-save.md) documents the preservation and restoration of inspections in progress;
+- [`state-persistence.md`](state-persistence.md) documents the preservation and restoration of inspections in progress;
 - [`localization.md`](localization.md) documents automatic language detection and manual language switching;
 - [`screenshots/`](screenshots/) contains anonymized or reconstructed visual examples.
 
