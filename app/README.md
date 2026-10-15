@@ -2,154 +2,111 @@
 
 ## About This Folder
 
-This folder documents the Power Apps component of the E-SMAT platform.
+This folder documents the Microsoft Power Apps component of the E-SMAT solution.
 
-E-SMAT is a bilingual application developed to standardize the execution and registration of safety and environmental inspections across multiple operational sites in Brazil and Argentina.
+E-SMAT is a bilingual application developed to standardize safety and environmental inspections across multiple operational sites in Brazil and Argentina. The application supports EMAT, SMAT, and ESMAT inspection methodologies through configurable workflows, cascading location filters, dynamic questionnaires, and SharePoint-based reference data.
 
-The application supports three inspection methodologies:
+The application automatically loads the interface in Brazilian Portuguese or Argentine Spanish according to the language configured on the user's device or browser. Users can also switch the interface language manually during the inspection flow.
 
-- **SMAT — Safety Management Audit Training**
-- **EMAT — Environment Management Audit Training**
-- **ESMAT — Integrated Environment and Safety Management Audit Training**
+> This folder presents an anonymized portfolio representation of the application. Production connections, proprietary requirements, internal identifiers, and confidential records are not included.
 
-Each operational site uses a specific inspection methodology and questionnaire according to its local requirements.
+---
 
-To support these differences without creating separate applications, E-SMAT uses SharePoint reference lists, business rules, and cascading filters to dynamically direct users to the appropriate questionnaire.
+## Application Workflows
 
-## Application Objectives
+E-SMAT provides two inspection entry points:
 
-The Power Apps solution was designed to:
+- **Create EMAT**, for environmental inspections;
+- **Create SMAT / ESMAT**, for safety or integrated safety and environmental inspections.
 
-- Standardize safety and environmental inspection records;
-- Support different inspection methodologies in a single application;
-- Accommodate site-specific forms and requirements;
-- Provide interfaces in Brazilian Portuguese and Argentine Spanish;
-- Guide users through a structured location identification process;
-- Automatically select the appropriate inspection questionnaire;
-- Allow inspections to be temporarily saved and resumed;
-- Validate required information before final submission;
-- Centralize inspection records in SharePoint Lists.
+The applicable questionnaire is loaded dynamically according to the selected workflow, operational location, methodology, active questionnaire version, and interface language.
 
-## Core Application Features
+---
 
-### Bilingual Interface
+## Documentation
 
-The application supports:
+- [`app-overview.md`](app-overview.md)  
+  Application purpose, business context, methodologies, scope, and main capabilities.
 
-- Brazilian Portuguese (`pt-BR`);
-- Argentine Spanish (`es-AR`).
+- [`navigation-logic.md`](navigation-logic.md)  
+  Screen sequence, workflow branching, navigation controls, validation, and submission flow.
 
-Interface elements and operational terminology are retrieved according to the applicable language configuration.
+- [`cascade-filtering.md`](cascade-filtering.md)  
+  Cascading location hierarchy and its relationship with questionnaire routing.
 
-### Multi-Site Configuration
+- [`state-persistence.md`](state-persistence.md)  
+  In-session data persistence, navigation state, final submission, and SharePoint storage logic.
 
-E-SMAT supports six operational sites located in Brazil and Argentina.
+- [`localization.md`](localization.md)  
+  Automatic device or browser language detection, manual language switching, and translation management.
 
-Each site has its own configuration based on:
+- [`screenshots/`](screenshots/)  
+  Anonymized screenshots of the shared, EMAT, and SMAT / ESMAT application workflows.
 
-- Local inspection methodology;
-- Operational structure;
-- Location hierarchy;
-- Applicable questionnaire;
-- Safety and environmental requirements;
-- Language requirements.
+---
 
-In this public portfolio repository, real site names and organizational structures are anonymized.
-
-### Cascading Location Filters
-
-The inspection starts with the identification of the inspected location.
-
-The available location options are progressively filtered according to the user's previous selections. This ensures that only valid combinations from the operational hierarchy can be selected.
-
-The location selection is also used to determine which inspection questionnaire should be displayed.
-
-### Dynamic Questionnaire Routing
-
-After the location is identified, the application evaluates the selected site and applicable business rules.
-
-Based on this configuration, the user is automatically directed to the appropriate questionnaire:
-
-- SMAT;
-- EMAT;
-- ESMAT.
-
-This process prevents incompatible forms from being selected and ensures that each inspection follows the requirements established for its operational context.
-
-### SharePoint-Based Configuration
-
-The application uses SharePoint Lists as its reference and operational storage layer.
-
-These lists provide the application with:
-
-- Location hierarchies;
-- Inspection requirements;
-- Question categories;
-- Questionnaire configurations;
-- Language translations;
-- Temporary inspection records;
-- Completed inspection records.
-
-This structure separates the application interface from its reference content and supports the maintenance of requirements without duplicating the application.
-
-### Temporary Save
-
-Users can save an inspection before final submission.
-
-This functionality allows inspections to be resumed later while preserving the information already registered.
-
-Temporary records are stored in SharePoint and remain distinguishable from completed inspections.
-
-## High-Level Application Flow
+## Folder Structure
 
 ```text
-Open E-SMAT
-      ↓
-Load Reference Data
-      ↓
-Determine Application Language
-      ↓
-Identify the Inspected Location
-      ↓
-Apply Cascading Location Filters
-      ↓
-Evaluate Site and Business Rules
-      ↓
-Select the Applicable Methodology
-      ↓
-Load SMAT, EMAT, or ESMAT Questionnaire
-      ↓
-Complete the Inspection
-      ↓
-Temporary Save or Final Submission
-      ↓
-Store the Record in SharePoint
+app/
+├── README.md
+├── app-overview.md
+├── navigation-logic.md
+├── cascade-filtering.md
+├── state-persistence.md
+├── localization.md
+└── screenshots/
+    ├── README.md
+    ├── shared/
+    ├── emat/
+    └── smat-esmat/
 ```
 
-### Folder Contents
+---
 
-- `app-overview.md`: application purpose, scope, users, and main capabilities;
-- `application-flow.md`: step-by-step application workflow;
-- `cascading-filter-logic.md`: documentation of the location filtering mechanism;
-- `questionnaire-routing.md`: rules used to select SMAT, EMAT, or ESMAT;
-- `bilingual-interface.md`: Portuguese and Spanish localization strategy;
-- `temporary-save.md`: temporary save and inspection recovery process;
-- `screenshots/`: anonymized or reconstructed application screens.
+## Key Application Capabilities
 
-### Privacy Notice
+- Bilingual interface in Brazilian Portuguese and Argentine Spanish;
+- Automatic device or browser language detection;
+- Manual language switching;
+- Separate EMAT and SMAT / ESMAT entry points;
+- Cascading operational-location filters;
+- Automatic SMAT or ESMAT routing;
+- Dynamic questionnaire loading;
+- Safe and unsafe observation registration;
+- In-session preservation of entered information;
+- SharePoint-based reference and inspection data;
+- Final submission confirmation;
+- No user-facing post-submission editing workflow.
 
-This folder contains an anonymized representation of a corporate application.
+---
 
-It does not include:
+## Technologies
 
-- The production Power Apps package;
-- Real SharePoint connections;
-- Internal URLs;
-- User or employee information;
-- Production credentials;
-- Complete proprietary requirements;
-- Real operational hierarchies;
-- Real inspection records;
-- Unredacted production screenshots.
+- Microsoft Power Apps;
+- Power Fx;
+- Microsoft SharePoint Online;
+- SharePoint Lists.
 
-The content is intended exclusively to demonstrate the application architecture, business logic, user experience, and technical capabilities applied during development.
+The downstream data ingestion, transformation, and analytics components are documented outside this folder.
+
+---
+
+## Suggested Reading Order
+
+For a complete understanding of the application, follow this sequence:
+
+1. [`app-overview.md`](app-overview.md)
+2. [`navigation-logic.md`](navigation-logic.md)
+3. [`cascade-filtering.md`](cascade-filtering.md)
+4. [`localization.md`](localization.md)
+5. [`state-persistence.md`](state-persistence.md)
+6. [`screenshots/README.md`](screenshots/README.md)
+
+---
+
+## Portfolio Scope
+
+This documentation focuses on the application architecture, user journey, configuration approach, localization, navigation state, and questionnaire-routing logic.
+
+The public repository does not include production Power Apps packages, complete Power Fx formulas, real SharePoint connections, identifiable users, real operational hierarchies, confidential inspection records, or the complete proprietary requirement set.
