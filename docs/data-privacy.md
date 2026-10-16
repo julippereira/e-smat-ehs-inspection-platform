@@ -143,7 +143,7 @@ secrets.json
 
 The project is uploaded through the GitHub web interface rather than a locally synchronized Git repository.
 
-A `.gitignore` remains useful as documentation and future protection, but it does not replace manual review before a web upload. Every selected file must be checked for credentials, production connections, real records, and local paths.
+A `.gitignore` remains useful as documentation and future protection, but it does not replace manual review before a web upload. Every selected file was manually checked for credentials, production connections, real records, and local paths.
 
 ---
 
@@ -173,9 +173,9 @@ Environment-specific mappings remain configuration-driven.
 
 ## Power BI Privacy Controls
 
-The public PBIX must contain only imported synthetic data.
+The public PBIX contains only imported synthetic data.
 
-Before distribution, the report should not contain:
+Before distribution, the report do not contain:
 
 - Hidden production queries;
 - Corporate URLs;
@@ -253,39 +253,6 @@ employee_department
 ```
 
 A production implementation should include only authorized attributes that are necessary for the intended analysis.
-
----
-
-## Privacy Review Checklist
-
-Before adding a public artifact, verify that it contains no:
-
-- Real names;
-- Real registrations;
-- Corporate email addresses;
-- Internal URLs;
-- Credentials or tokens;
-- Production IDs;
-- Internal infrastructure names;
-- Proprietary questionnaire text;
-- Confidential inspection descriptions;
-- Workspace or tenant information;
-- Sensitive local file paths.
-
----
-
-## Incident Response
-
-If a real credential or sensitive record is accidentally published:
-
-1. Remove the artifact from the current repository view;
-2. Revoke or rotate the exposed credential immediately;
-3. Review the repository history and connected artifacts;
-4. Replace the file with a sanitized version;
-5. Confirm that screenshots, PBIX data, and documentation do not contain the same information;
-6. Follow the relevant organizational security and privacy process.
-
-Removing a file from the latest commit does not by itself guarantee that the information is absent from repository history.
 
 ---
 
