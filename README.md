@@ -1,388 +1,444 @@
-# E-SMAT | Multi-Site EHS Inspection and Analytics Platform
+# E-SMAT app & EHS Inspection Platform
 
 ## Overview
 
-E-SMAT is a bilingual, end-to-end inspection management and analytics platform developed to standardize safety and environmental risk inspections across six operational sites in Brazil and Argentina.
+E-SMAT is a digital solution for managing Safety and Environmental inspections across industrial operations. 
 
-The solution supports three inspection methodologies:
+The project was created to replace fragmented inspection processes with a standardized workflow that connects shopfloor data collection, operational records, data engineering, quality validation, and business intelligence. 
 
-- **EMAT — Environment Management Audit Training**
-- **SMAT — Safety Management Audit Training**
-- **ESMAT — Integrated Environment and Safety Management Audit Training**
+Through a multilingual Power Apps application, inspection users can select the industrial context, access the appropriate questionnaire, record safe and unsafe observations, complete complementary fields, and submit the inspection through a guided process. 
 
-Because each operational site follows specific inspection requirements, the application uses a cascade filtering mechanism to identify the inspected location and automatically direct the user to the correct inspection methodology and questionnaire.
+Inspection data is stored in SharePoint, processed through an Azure Databricks pipeline, validated before analytical publishing, and made available in Power BI for monitoring inspection activity, operational conditions, Safety and Environmental themes, and observed acts. 
 
-The platform combines a bilingual Power Apps application, SharePoint-based operational storage, Python data processing in Azure Databricks, and an interactive Power BI dashboard refreshed hourly.
+The application supports different inspection record types used by industrial sites in Latin America. EMAT, SMAT, and ESMAT are treated as operational categories within the solution, while the broader architecture remains consistent across sites and methodologies.
 
-> This repository presents an anonymized portfolio version of the solution. Organizational identifiers, production connections, internal requirements, real inspection records, and sensitive information were removed, generalized, or replaced with synthetic examples.
-
----
-
-## Business Challenge
-
-Safety and environmental inspections were conducted across multiple operational sites with different processes, requirements, languages, and inspection methodologies.
-
-Each site required a specific questionnaire based on its operational and regulatory context. Some locations used environmental inspections, others used safety inspections, while two operational sites required an integrated methodology combining both areas.
-
-The solution needed to:
-
-- Standardize safety and environmental inspection records;
-- Support different inspection methodologies;
-- Direct each user to the correct questionnaire;
-- Accommodate site-specific requirements;
-- Provide interfaces in Brazilian Portuguese and Argentine Spanish;
-- Preserve temporary and incomplete inspection records;
-- Centralize operational data;
-- Transform raw inspection records into analytics-ready datasets;
-- Provide frequently updated management indicators.
+> **Corporate ownership and portfolio scope**
+>
+> The original solution, its business context, application, data structures, analytical assets, and related materials belong to the company where the project was developed. This repository presents only a **simplified, anonymized, and mock-data-based portfolio version** created to demonstrate technical skills and solution architecture.
+>
+> No production application package, real inspection record, employee information, credential, internal URL, proprietary identifier, confidential questionnaire, or production connection is included.
 
 ---
 
-## Inspection Methodologies
+## Application Preview
 
-### EMAT
+The Power Apps layer is the main focus of this portfolio project. It was designed to turn a multi-step inspection process into a guided and consistent user experience.
 
-**Environment Management Audit Training**
+The application supports:
 
-A structured inspection methodology focused on environmental conditions, controls, risks, and operational practices.
+- EMAT, SMAT, and ESMAT inspection flows;
+- Portuguese and Spanish localization;
+- Automatic language selection;
+- Cascading filters for operational context;
+- Dynamic questionnaire routing;
+- Safety and environmental questions;
+- Safe and unsafe act registration;
+- Conditional fields for unsafe conditions, Safety Tags, and near misses;
+- Up to three observed-person registrations per inspection;
+- Temporary session storage;
+- Validation before submission;
+- SharePoint integration;
+- Standardized header and response records;
+- Data prepared for downstream analytics.
 
-### SMAT
-
-**Safety Management Audit Training**
-
-A structured inspection methodology focused on occupational safety conditions, unsafe acts, controls, and risk prevention practices.
-
-### ESMAT
-
-**Environment and Safety Management Audit Training**
-
-An integrated methodology combining environmental and occupational safety requirements in a single inspection workflow.
-
-The ESMAT methodology is used only at the two operational sites located in the same industrial region, according to their specific business requirements.
-
----
-
-## Multi-Site Configuration
-
-E-SMAT was designed to serve six operational sites in Brazil and Argentina.
-
-Each site uses a specific inspection methodology and questionnaire according to its local characteristics and predefined business requirements.
-
-To protect organizational information, the public portfolio version represents the locations using anonymized identifiers:
-
-- Site A;
-- Site B;
-- Site C;
-- Site D;
-- Site E;
-- Site F.
-
-The application dynamically determines the appropriate questionnaire based on the information entered during the location identification stage.
+Application documentation is available in [`app/`](app/).
 
 ---
 
-## Bilingual User Experience
+## Why the Application Matters
 
-The application is available in:
+The application is more than a digital form. The main challenge was to translate inspection rules, operational hierarchies, multilingual content, and different methodologies into a usable workflow that reduces manual interpretation.
 
-- **Brazilian Portuguese — pt-BR**
-- **Argentine Spanish — es-AR**
+The app controls the progression from context selection to questionnaire completion:
 
-The Spanish version was developed specifically to support the operational site in Argentina.
+```text
+Language and user context
+        ↓
+Site and operational hierarchy
+        ↓
+Inspection methodology
+        ↓
+Questionnaire version and routing
+        ↓
+Safe and unsafe act registration
+        ↓
+Complementary safety information
+        ↓
+Validation and submission
+```
 
-The localization process covers interface components such as:
+This design keeps the user experience simple while handling the business logic behind the scenes.
 
-- Navigation elements;
-- Field labels;
-- Instructions;
-- Validation messages;
-- Inspection requirements;
-- Response options;
-- Temporary save notifications;
-- Submission confirmations.
+### Key application capabilities
 
-This approach provides a consistent inspection experience while preserving the terminology required for each local context.
+#### Cascading filtering
 
----
+Operational selections are progressively filtered so users see only valid combinations of site, segment, business unit or area, line, and workstation.
 
-## Dynamic Questionnaire Routing
+This context is also used to select the appropriate questionnaire configuration.
 
-One of the core features of E-SMAT is its cascade filtering mechanism.
+#### Dynamic questionnaire routing
 
-At the beginning of an inspection, the user completes a location identification screen. The available options are progressively filtered according to the previous selections.
+The application determines the questionnaire according to the selected site, methodology, language, and active configuration rather than embedding one fixed questionnaire in the interface.
 
-A simplified version of the navigation logic is:
+#### Multilingual interface
 
-1. The user selects the operational site;
-2. The application displays the corresponding location hierarchy;
-3. The user identifies the area or location being inspected;
-4. The filtering mechanism evaluates the selected site and location;
-5. The application determines the applicable inspection methodology;
-6. The user is automatically directed to the correct questionnaire;
-7. Only the requirements applicable to that inspection context are displayed.
+Labels, navigation elements, instructions, categories, and questionnaire content support Portuguese and Spanish. The localization approach is documented separately so interface text remains independent from the screen logic.
 
-This mechanism prevents users from selecting an incompatible form and ensures that each inspection follows the requirements established for the selected location.
+#### Temporary save
 
----
+Inspection progress can be stored temporarily during the active session. This reduces the risk of losing work when the inspection contains several questions or requires interruption.
 
-## Business Rules
+#### Conditional safety fields
 
-The application applies predefined business rules to determine:
+Additional fields appear only when relevant, including:
 
-- Which language should be displayed;
-- Which location options are available;
-- Which inspection methodology applies to each site;
-- Which questionnaire should be loaded;
-- Which requirements must be displayed;
-- Which fields are mandatory;
-- Whether an inspection may be temporarily saved;
-- Whether the record is ready for final submission.
+```text
+Unsafe condition description
+Safety Tag number
+Near-miss description
+```
 
-By centralizing these rules within the application workflow and supporting data structure, E-SMAT reduces manual interpretation and improves consistency across sites.
+The same dependencies are validated later in the data-quality pipeline.
 
----
+#### Structured submission
 
-## Temporary Save Functionality
+The submission process separates inspection-level context from question-level responses:
 
-E-SMAT allows users to save an inspection before completing the final submission.
+```text
+Inspection header
+        1
+        │
+        *
+Inspection responses
+```
 
-Temporary records are stored in SharePoint, enabling users to:
-
-- Preserve an inspection in progress;
-- Resume data entry later;
-- Avoid losing information during longer inspections;
-- Complete the questionnaire according to operational availability;
-- Distinguish draft records from completed inspections.
-
-The final submission process validates the required information before registering the inspection as completed.
+This structure supports traceability, questionnaire enrichment, quality checks, and analytical reporting.
 
 ---
 
 ## Solution Architecture
 
-The platform follows an end-to-end architecture:
-
 ```text
-Predefined EHS Requirements
-            ↓
-Bilingual Power Apps Application
-            ↓
-Site and Location Identification
-            ↓
-Cascade Filtering and Business Rules
-            ↓
-Dynamic Questionnaire Selection
-            ↓
-EMAT | SMAT | ESMAT
-            ↓
+Power Apps
+    ↓
 SharePoint Lists
-Operational Records and Temporary Saves
-            ↓
-Azure Databricks
-Python-Based Ingestion and Transformation
-            ↓
-Curated Analytics Dataset
-            ↓
-Power BI Dashboard
-Hourly Scheduled Refresh
+    ↓
+Microsoft Graph API
+    ↓
+Databricks / PySpark
+    ↓
+Bronze Delta tables
+    ↓
+Silver transformations
+    ↓
+Data-quality gate
+    ↓
+Gold analytical tables
+    ↓
+Power BI
 ```
 
----
+### Application layer
 
-## Data Flow
+The Power Apps application manages user interaction, navigation, business-rule execution, multilingual content, temporary values, validation, and submission.
 
-1. Inspection requirements
+### Data-source layer
 
-Safety and environmental requirements are predefined by the responsible business area and associated with the applicable sites, locations, methodologies, and questionnaires.
+SharePoint Lists store inspection headers, question-level responses, questionnaire requirements, locations, categories, and translation references.
 
-2. Data collection
+### Data-engineering layer
 
-Users access the bilingual Power Apps application and identify the location to be inspected.
+Databricks notebooks authenticate through Microsoft Graph API, ingest SharePoint records, standardize multilingual values, create analytical keys, validate data quality, and publish Delta tables.
 
-3. Form selection
+### Reporting layer
 
-The cascade filtering mechanism evaluates the selected location and directs the user to the appropriate EMAT, SMAT, or ESMAT questionnaire.
-
-4. Operational storage
-
-Completed inspections and temporary records are stored in structured SharePoint Lists.
-
-5. Data ingestion
-
-Inspection records and related reference data are ingested into Azure Databricks.
-
-6. Data transformation
-
-Python-based processes clean, standardize, validate, and combine data from the operational lists.
-
-7. Analytical modeling
-
-The transformed records are organized into curated datasets designed for analytical consumption.
-
-8. Reporting
-
-The curated data feeds an interactive Power BI dashboard with an hourly scheduled refresh.
-
----
-
-## Key Features
-- Bilingual interface in Brazilian Portuguese and Argentine Spanish;
-- Standardized multi-site inspection process;
-- Support for EMAT, SMAT, and ESMAT methodologies;
-- Site-specific questionnaires;
-- Dynamic questionnaire routing;
-- Cascade filtering by site and inspected location;
-- Rules-based navigation;
-- Conditional display of inspection requirements;
-- Temporary save functionality;
-- Centralized storage in SharePoint Lists;
-- Automated data ingestion;
-- Python-based data cleaning and transformation;
-- Analytics-ready data modeling;
-- Interactive Power BI reporting;
-- Hourly dashboard refresh;
-- Anonymized and synthetic portfolio datasets.
-
----
-
-## Technologies
-
-- Microsoft Power Apps;
-- Microsoft SharePoint Online;
-- Azure Databricks;
-- Python;
-- Power BI;
-- Power Query;
-- DAX.
-
----
-
-## Skills Demonstrated
-
-### Application development
-
-- Low-code application design;
-- Bilingual interface development;
-- Dynamic forms;
-- Cascading filters;
-- Conditional navigation;
-- Input validation;
-- State and record management.
-
-### Data engineering
-
-- Data ingestion;
-- Python-based transformation;
-- Data cleaning and standardization;
-- Business-rule implementation;
-- Data quality validation;
-- Analytical dataset preparation.
-
-
-### Business intelligence
-
-- Dimensional data modeling;
-- KPI development;
-- DAX measures;
-- Interactive dashboard design;
-- Scheduled data refresh;
-- Multi-site performance monitoring.
-
-### Business analysis
-
-- Requirements gathering;
-- Translation of operational requirements into application rules;
-- Multi-site process standardization;
-- Stakeholder-oriented solution design;
-- EHS process analysis;
-- Multilingual and cross-regional implementation.
+Power BI uses the curated analytical model to present inspection records, safe and unsafe acts, themes, operational hierarchies, employees, job roles, trends, and drill-through details.
 
 ---
 
 ## Repository Structure
 
-
-```
-e-smat-ehs-inspection-platform/
-│
+```text
+E-SMAT/
 ├── README.md
-├── LICENSE
 ├── .gitignore
 │
 ├── app/
+│   ├── README.md
 │   ├── app-overview.md
 │   ├── navigation-logic.md
 │   ├── cascade-filtering.md
-│   ├── temporary-save.md
 │   ├── localization.md
-│   └── screens/
+│   └── temporary-save.md
 │
 ├── data/
-│   ├── sample/
-│   │   ├── sample_inspections.csv
-│   │   ├── sample_requirements.csv
-│   │   ├── sample_locations.csv
-│   │   └── sample_questionnaires.csv
-│   ├── data-dictionary.md
-│   └── README.md
+│   ├── README.md
+│   └── sample/
+│       ├── sample-locations.csv
+│       ├── sample-categories.csv
+│       ├── sample-translations.csv
+│       ├── sample-requirements.csv
+│       ├── sample-inspection-header.csv
+│       └── sample-inspection-responses.csv
 │
-├── notebooks/
-│   ├── 01_data_ingestion.py
-│   ├── 02_data_cleaning.py
-│   ├── 03_data_transformation.py
-│   ├── 04_data_quality.py
-│   └── 05_analytics_dataset.py
+├── data-engineering/
+│   ├── README.md
+│   ├── ingestion.md
+│   ├── transformations.md
+│   ├── data-quality.md
+│   ├── config/
+│   │   └── graph_api_config.example.json
+│   └── notebooks/
+│       ├── 01_shared_functions.ipynb
+│       ├── 02_sharepoint_ingestion.ipynb
+│       ├── 03_data_transformation.ipynb
+│       ├── 04_data_quality.ipynb
+│       ├── 05_delta_load.ipynb
+│       └── 06_employee_dimension.ipynb
 │
-├── power-bi/
-│   ├── dashboard-overview.md
-│   ├── data-model.md
-│   ├── measures.md
-│   └── screenshots/
-│
-├── architecture/
-│   ├── solution-architecture.png
-│   ├── application-flow.png
-│   └── data-flow.md
-│
-├── documentation/
-│   ├── business-rules.md
-│   ├── inspection-methodologies.md
-│   ├── localization-strategy.md
-│   ├── privacy-and-anonymization.md
-│   └── technical-decisions.md
-│
-└── assets/
-    ├── app-preview.png
-    └── dashboard-preview.png
+└── power-bi/
+    ├── README.md
+    ├── e-smat-dashboard.pbix
+    ├── dashboard-pages.md
+    ├── data-model.md
+    ├── measures.md
+    ├── key-validation-report.md
+    ├── mock-data/
+    ├── screenshots/
+    └── theme/
+        └── esmat-theme.json
 ```
-
---- 
-
-## Data Privacy and Anonymization
-
-This repository is an anonymized portfolio representation of a corporate solution.
-
-The public version does not include:
-
-- Real inspection records;
-- Employee or user information;
-- Internal credentials;
-- SharePoint URLs;
-- Production connections;
-- Databricks workspace or catalog identifiers;
-- Proprietary inspection requirements;
-- Internal organizational structures;
-- Unredacted application screenshots;
-- Production Power Apps packages;
-- Production Power BI files.
-
-
-All sample data is synthetic and was created exclusively to demonstrate the technical architecture, business logic, data pipeline, and analytical capabilities of the project.
 
 ---
 
-## Disclaimer
+## Application Documentation
 
-This repository is intended exclusively to demonstrate the architecture, technologies, development approach, and analytical capabilities applied in the project.
+The [`app/`](app/) folder explains the main functional and technical decisions of the application.
 
-It does not reproduce the complete production environment, proprietary inspection requirements, or internal organizational processes.
+| Document | Scope |
+|---|---|
+| [`app/README.md`](app/README.md) | Application entry point and documentation map |
+| [`app/app-overview.md`](app/app-overview.md) | Screens, inspection flow, components, and responsibilities |
+| [`app/navigation-logic.md`](app/navigation-logic.md) | Screen transitions, validation, and state handling |
+| [`app/cascade-filtering.md`](app/cascade-filtering.md) | Operational hierarchy and questionnaire routing |
+| [`app/localization.md`](app/localization.md) | Portuguese and Spanish localization strategy |
+| [`app/temporary-save.md`](app/temporary-save.md) | Session persistence and temporary inspection state |
+
+The application documentation focuses on architecture and logic. The production app package and internal connection information are not published.
+
+---
+
+## Synthetic Data
+
+The [`data/`](data/) folder contains synthetic CSV files that reproduce the logical structures used by the application.
+
+The public datasets support review of:
+
+- Locations and operational hierarchies;
+- Questionnaire categories;
+- Translations;
+- Questionnaire requirements;
+- Inspection headers;
+- Question-level responses.
+
+The synthetic values preserve relationships and expected grains without reproducing production records.
+
+See [`data/README.md`](data/README.md) for the dataset documentation.
+
+---
+
+## Data Engineering
+
+The [`data-engineering/`](data-engineering/) folder documents the pipeline that moves inspection data from SharePoint to curated Delta tables.
+
+```text
+01_shared_functions.ipynb
+        ↓
+02_sharepoint_ingestion.ipynb
+        ↓
+Bronze
+        ↓
+03_data_transformation.ipynb
+        ↓
+Silver
+        ↓
+04_data_quality.ipynb
+        ↓
+Quality gate
+        ↓
+05_delta_load.ipynb
+        ↓
+Gold
+```
+
+`06_employee_dimension.ipynb` is an auxiliary workflow that consolidates observer and observed-person registrations and prepares future employee enrichment from an authorized source.
+
+The public pipeline demonstrates:
+
+- Microsoft Graph API authentication and pagination;
+- Configuration-driven SharePoint ingestion;
+- PySpark transformations;
+- Portuguese and Spanish normalization;
+- Stable analytical keys;
+- Header-detail enrichment;
+- Delta Lake persistence;
+- Data-quality monitoring;
+- Blocking quality controls;
+- Analytical publishing.
+
+See [`data-engineering/README.md`](data-engineering/README.md) for the complete pipeline map.
+
+---
+
+## Power BI
+
+The [`power-bi/`](power-bi/) folder contains a downloadable PBIX connected to synthetic data, the semantic-model documentation, DAX measures, report screenshots, visual theme, and validated mock tables.
+
+The report includes:
+
+```text
+Visão Geral (Overview)
+Registros (Records)
+Atos Observados (Observed Acts)
+Pessoas (People)
+Cargo (Job Roles)
+Consultar (Search Records)
+DT_Registro (Drill-Through Record)
+DT_Matricula (Drill-Through Employee)
+```
+
+The public mock reproduces the expected table structures and returns:
+
+```text
+72 inspection records
+1,481 safe acts
+341 unsafe acts
+1,822 total observed acts
+```
+
+The reporting layer is documented in [`power-bi/README.md`](power-bi/README.md).
+
+---
+
+## Technical Highlights
+
+### Power Platform
+
+- Power Apps canvas application;
+- SharePoint Lists;
+- Cascading filters;
+- Dynamic forms and questionnaire routing;
+- Conditional visibility and validation;
+- Session collections and temporary state;
+- Multilingual interface content;
+- Structured submission logic.
+
+### Data Engineering
+
+- Microsoft Graph API;
+- OAuth 2.0 client-credentials pattern;
+- Python and PySpark;
+- Databricks notebooks;
+- Bronze, Silver, and Gold layers;
+- Delta Lake;
+- Schema validation;
+- Referential-integrity checks;
+- Data-quality gates.
+
+### Analytics
+
+- Power Query;
+- Semantic modeling;
+- DAX measures;
+- Date dimension;
+- Active and inactive relationships;
+- Drill-through navigation;
+- Theme-based formatting;
+- Mock-data validation.
+
+---
+
+## Public Version and Confidentiality
+
+This repository is not the production source code repository and does not represent an official company publication.
+
+The public version intentionally excludes:
+
+- The production Power Apps package;
+- Production SharePoint exports;
+- Real employee names, registrations, or email addresses;
+- Real inspection records;
+- Internal plant, segment, area, line, or workstation names;
+- Production tenant, client, site, catalog, schema, or table identifiers;
+- Client secrets, access tokens, and credentials;
+- Corporate URLs and workspace references;
+- Proprietary questionnaire text;
+- Internal operational documentation.
+
+The published notebooks, CSV files, screenshots, and PBIX use placeholders, anonymized structures, or fully synthetic values.
+
+This repository is intended only to demonstrate technical competencies involved in designing the solution, including application architecture, business-rule implementation, data integration, data engineering, quality validation, semantic modeling, and analytical reporting.
+
+---
+
+## Skills Demonstrated
+
+```text
+Power Apps
+Power Fx
+SharePoint Online
+Microsoft Graph API
+Python
+PySpark
+Databricks
+Delta Lake
+Data quality
+Power Query
+Power BI
+DAX
+Semantic modeling
+Portuguese and Spanish localization
+Technical documentation
+Synthetic data design
+```
+
+---
+
+## Documentation Map
+
+```text
+README.md
+├── app/README.md
+├── data/README.md
+├── data-engineering/README.md
+└── power-bi/README.md
+```
+
+Start with the application documentation to understand the user workflow and business logic:
+
+[`app/README.md`](app/README.md)
+
+Then review the supporting layers:
+
+- [`data/README.md`](data/README.md)
+- [`data-engineering/README.md`](data-engineering/README.md)
+- [`power-bi/README.md`](power-bi/README.md)
+
+---
+
+## Portfolio Scope
+
+E-SMAT demonstrates an end-to-end solution, but the portfolio narrative intentionally gives greater weight to the application layer.
+
+The strongest focus is the translation of a real inspection process into a guided digital product that combines:
+
+- User-centered navigation;
+- Business rules;
+- Operational context;
+- Multilingual content;
+- Dynamic questionnaires;
+- Data integrity at the point of entry;
+- Integration with downstream data and analytics.
+
+The pipeline and dashboard show how the application data can be governed and analyzed, while the application itself represents the main product and solution-design contribution documented in this repository.
