@@ -1,5 +1,26 @@
 # E-SMAT app & EHS Inspection Platform
 
+<!-- E-SMAT technology badges -->
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Power%20Apps-742774?style=flat-square&logo=powerapps&logoColor=white" alt="Power Apps">
+  <img src="https://img.shields.io/badge/SharePoint-038387?style=flat-square&logo=microsoftsharepoint&logoColor=white" alt="SharePoint">
+  <img src="https://img.shields.io/badge/Microsoft%20Graph-0078D4?style=flat-square&logo=microsoft&logoColor=white" alt="Microsoft Graph">
+  <img src="https://img.shields.io/badge/Azure%20Databricks-FF3621?style=flat-square&logo=databricks&logoColor=white" alt="Azure Databricks">
+  <img src="https://img.shields.io/badge/Delta%20Lake-00ADD8?style=flat-square&logo=delta&logoColor=white" alt="Delta Lake">
+  <img src="https://img.shields.io/badge/Power%20BI-F2C811?style=flat-square&logo=powerbi&logoColor=222222" alt="Power BI">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/PySpark-E25A1C?style=flat-square&logo=apachespark&logoColor=white" alt="PySpark">
+  <img src="https://img.shields.io/badge/Power%20Query-217346?style=flat-square&logo=microsoft&logoColor=white" alt="Power Query">
+  <img src="https://img.shields.io/badge/DAX-F2C811?style=flat-square&logo=powerbi&logoColor=222222" alt="DAX">
+  <img src="https://img.shields.io/badge/JSON-000000?style=flat-square&logo=json&logoColor=white" alt="JSON">
+  <img src="https://img.shields.io/badge/Data-Synthetic-2E8B57?style=flat-square" alt="Synthetic Data">
+  <img src="https://img.shields.io/badge/Domain-Industrial%20EHS-1F4E78?style=flat-square" alt="Industrial EHS">
+  <img src="https://img.shields.io/badge/Interface-PT%20%7C%20ES-6F42C1?style=flat-square" alt="Portuguese and Spanish">
+  <img src="https://img.shields.io/badge/Architecture-End--to--End-0B7285?style=flat-square" alt="End-to-End Architecture">
+</p>
+
+
 ## Overview
 
 E-SMAT is a digital solution for managing Safety and Environmental inspections across industrial operations. 
