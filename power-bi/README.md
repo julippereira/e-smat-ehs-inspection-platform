@@ -2,22 +2,13 @@
 
 ## Overview
 
-This folder contains the public Power BI layer of E-SMAT, an inspection solution that consolidates EMAT, SMAT, and ESMAT records into an interactive analytical report.
+This folder contains the public Power BI layer of E-SMAT, including the downloadable PBIX, synthetic source tables, semantic-model documentation, DAX measures, report screenshots, and visual theme.
 
-The public report is a clone of the operational dashboard connected to synthetic data. The semantic model, calculations, navigation, visible pages, and hidden drill-through pages were preserved whenever possible, while production records, employee information, organizational identifiers, and infrastructure references were replaced with public-safe mock content.
+The report consolidates EMAT, SMAT, and ESMAT inspection records into an interactive analytical experience covering inspection volume, safe and unsafe acts, safety and environmental themes, operational hierarchies, observer participation, observed people, job roles, and record-level drill through.
 
-The dashboard supports analysis of:
+The public report is a clone of the operational dashboard connected only to synthetic data. The implemented model, calculations, navigation, visible pages, and hidden drill-through pages were preserved whenever possible, while production records, employee information, organizational identifiers, and connection details were removed.
 
-- Inspection volume by methodology and operational context;
-- Safe and unsafe acts;
-- Safety and environmental themes;
-- Plants, segments, areas, lines, and workstations;
-- Observer and observed-person participation;
-- Job roles and synthetic employees;
-- Inspection-level and employee-level drill through;
-- Monthly, weekly, and daily trends.
-
-> All data displayed in the public report is synthetic. The repository does not contain production inspection records, real employee information, corporate credentials, or confidential organizational structures.
+> All values displayed by the public report are synthetic. The repository does not contain production inspection records, real employee information, corporate credentials, or confidential organizational structures.
 
 ---
 
@@ -25,7 +16,7 @@ The dashboard supports analysis of:
 
 ![E-SMAT overview dashboard](./screenshots/01-overview.png)
 
-The public dashboard contains six visible pages and two hidden drill-through pages:
+The report contains six visible analytical pages and two hidden drill-through pages:
 
 ```text
 Visão Geral
@@ -39,6 +30,41 @@ DT_Matricula
 ```
 
 Detailed page descriptions are available in [`dashboard-pages.md`](dashboard-pages.md).
+
+---
+
+## Power BI File
+
+The portfolio includes the downloadable report:
+
+[`e-smat-dashboard.pbix`](e-smat-dashboard.pbix)
+
+The PBIX is a public-safe clone of the operational dashboard and uses the synthetic files available in `mock-data/`.
+
+The file preserves:
+
+- The implemented semantic model and relationships;
+- Power Query transformations;
+- DAX measures organized in `d_medidas`;
+- Six visible report pages;
+- Two hidden drill-through pages;
+- Slicers, visual interactions, navigation buttons, and sorting rules;
+- The visual identity defined by `theme/esmat-theme.json`.
+
+The PBIX does not contain production credentials, internal connection details, real employee information, or production inspection records.
+
+### Opening the report
+
+1. Download `e-smat-dashboard.pbix`;
+2. Download the complete `mock-data/` folder;
+3. Keep all mock CSV files together in one local folder;
+4. Open the PBIX in Power BI Desktop;
+5. If prompted, update the CSV source paths in Power Query to the local `mock-data/` folder;
+6. Apply the query changes and refresh the model.
+
+Local paths can differ between computers, so the CSV sources may need to be redirected after download. Expected schemas, table names, keys, data types, and relationships are documented in [`data-model.md`](data-model.md).
+
+The screenshots and Markdown documentation remain available for repository visitors who do not have Power BI Desktop installed.
 
 ---
 
@@ -70,23 +96,19 @@ f_formulario
 d_classificacao
 ```
 
-Questionnaire and employee dimensions provide additional analytical context:
+Additional dimensions provide questionnaire and employee context:
 
 ```text
-d_questionario
-      ↓
-f_formulario
+d_questionario → f_formulario
 ```
 
 ```text
-d_lista_matriculas
-      ↓
-d_cabecalho
+d_lista_matriculas → d_cabecalho
 ```
 
 ![E-SMAT Power BI data model](./screenshots/09-data-model.png)
 
-The complete semantic-model documentation is available in [`data-model.md`](data-model.md).
+The complete model documentation is available in [`data-model.md`](data-model.md).
 
 ---
 
@@ -95,6 +117,7 @@ The complete semantic-model documentation is available in [`data-model.md`](data
 ```text
 power-bi/
 ├── README.md
+├── e-smat-dashboard.pbix
 ├── dashboard-pages.md
 ├── data-model.md
 ├── measures.md
@@ -130,22 +153,20 @@ power-bi/
 
 | Page | Visibility | Analytical purpose |
 |---|---|---|
-| **Visão Geral** (Overview) | Visible | Executive KPIs, themes, site comparisons, and monthly trends |
-| **Registros** (Records) | Visible | Inspection volume by operational hierarchy and date |
-| **Atos Observados** (Observed Acts) | Visible | Safe and unsafe acts by plant, segment, area, line, and workstation |
-| **Pessoas** (People) | Visible | Observer and observed-person analyses |
-| **Cargo** (Job Role) | Visible | Indicators by job role and synthetic employee |
-| **Consultar** (Record Search) | Visible | Searchable inspection-level detail and navigation |
-| **DT_Registro** (Drill-Through Record) | Hidden | Complete context and question detail for one inspection |
-| **DT_Matricula** (Drill-Through Employee) | Hidden | Inspection history and observed acts for one selected registration |
+| **Visão Geral** | Visible | Executive KPIs, themes, site comparisons, and monthly trends |
+| **Registros** | Visible | Inspection volume by operational hierarchy and date |
+| **Atos Observados** | Visible | Safe and unsafe acts by plant, segment, area, line, and workstation |
+| **Pessoas** | Visible | Observer and observed-person analyses |
+| **Cargo** | Visible | Indicators by job role and synthetic employee |
+| **Consultar** | Visible | Searchable inspection-level detail and navigation |
+| **DT_Registro** | Hidden | Complete context and question detail for one inspection |
+| **DT_Matricula** | Hidden | Inspection history and observed acts for one selected registration |
 
-The screenshots and detailed visual descriptions are documented in [`dashboard-pages.md`](dashboard-pages.md).
+The screenshots and visual descriptions are documented in [`dashboard-pages.md`](dashboard-pages.md).
 
 ---
 
 ## Semantic Model
-
-The public model contains seven logical tables:
 
 | Table | Role | Grain |
 |---|---|---|
@@ -160,40 +181,30 @@ The public model contains seven logical tables:
 ### Principal relationships
 
 ```text
-d_calendario[id_data]
-        1 ─── *
-d_cabecalho[Data]
+d_calendario[id_data] 1 ─── * d_cabecalho[Data]
 ```
 
 ```text
-d_cabecalho[Titulo]
-        1 ─── *
-f_formulario[Titulo]
+d_cabecalho[Titulo] 1 ─── * f_formulario[Titulo]
 ```
 
 ```text
-d_questionario[Id_Questao]
-        1 ─── *
-f_formulario[ID_Questao]
+d_questionario[Id_Questao] 1 ─── * f_formulario[ID_Questao]
 ```
 
 ```text
-f_formulario[ChaveUnica]
-        1 ─── *
-d_classificacao[ChaveUnica]
+f_formulario[ChaveUnica] 1 ─── * d_classificacao[ChaveUnica]
 ```
 
-The direct date relationships to downstream tables remain inactive when they would create ambiguous filter paths. The cloned report preserves the relationship structure already used by the implemented visuals and calculations.
+The model preserves `d_cabecalho[Tipo]` as the methodology field for compatibility with the cloned PBIX. Direct downstream date relationships remain inactive when they would create ambiguous filter paths.
 
-See [`data-model.md`](data-model.md) for table definitions, data types, active and inactive relationships, filter propagation, employee-role handling, and drill-through dependencies.
+See [`data-model.md`](data-model.md) for data types, active and inactive relationships, filter propagation, employee-role handling, and drill-through dependencies.
 
 ---
 
 ## Measures
 
-The report uses a dedicated `d_medidas` table to organize DAX calculations.
-
-The principal measures include:
+The report uses a dedicated `d_medidas` table. Principal measures include:
 
 ```text
 EMAT
@@ -212,7 +223,7 @@ UA SAF
 Ultima_Atualizacao
 ```
 
-The public mock returns the following unfiltered totals:
+Expected unfiltered mock totals:
 
 ```text
 EMAT                           24
@@ -225,13 +236,11 @@ Total acts                  1,822
 Unsafe acts per record        4.74
 ```
 
-The complete DAX definitions, dependencies, formatting, and reconciliation rules are documented in [`measures.md`](measures.md).
+Complete DAX definitions and reconciliation rules are documented in [`measures.md`](measures.md).
 
 ---
 
 ## Mock Data
-
-The `mock-data/` folder reproduces the schema expected by the cloned PBIX.
 
 | File | Rows | Purpose |
 |---|---:|---|
@@ -242,25 +251,13 @@ The `mock-data/` folder reproduces the schema expected by the cloned PBIX.
 | `d_calendario.csv` | 365 | Complete 2026 calendar |
 | `d_lista_matriculas.csv` | 93 | Synthetic employee registrations and names |
 
-The mock tables preserve:
-
-- Expected table and column names;
-- Relationship keys;
-- Record grains;
-- Methodology totals;
-- Safe and unsafe act totals;
-- Calendar coverage;
-- Employee registration references;
-- Conditional inspection fields;
-- Questionnaire categories and questions.
-
-The production report uses governed enterprise sources. The CSV files exist only to make the public portfolio version reviewable without production access.
+The production dashboard uses governed enterprise sources. These CSV files exist only to make the public portfolio version reviewable without production access.
 
 ---
 
 ## Key Validation
 
-The mock model was checked through 31 key and relationship controls.
+The synthetic model passed 31 key and relationship controls:
 
 ```text
 Overall status      PASS
@@ -270,127 +267,63 @@ Failed                 0
 Blocking failures      0
 ```
 
-The validation confirms that:
-
-- Primary keys are unique and populated;
-- Every response references a valid inspection;
-- Every response references a valid question;
-- Every response has one `safe` and one `unsafe` classification row;
-- Classification quantities reconcile with the response fact;
-- All used dates exist in the calendar dimension;
-- All referenced registrations exist in `d_lista_matriculas`;
-- No orphan relationship keys were found.
+The checks confirm unique keys, complete header-detail relationships, valid questionnaire references, two classification rows per response, quantity reconciliation, complete calendar coverage, complete registration coverage, and no orphan relationship keys.
 
 See [`key-validation-report.md`](key-validation-report.md) for the complete result.
 
 ---
 
-## Calendar and Time Analysis
+## Calendar and Employee Analysis
 
-`d_calendario` covers all days from January 1, 2026 through December 31, 2026.
+`d_calendario` covers every day from January 1 through December 31, 2026 and supports year, month, period, ISO week, day, quarter, and semester analyses.
 
-The dimension supports:
+`d_lista_matriculas` consolidates registrations from the observer and three observed-person columns. The dimension contains synthetic names and stable sorting fields.
 
-```text
-Year
-Month
-Period
-ISO week
-Day
-Day of week
-Quarter
-Semester
-```
-
-Examples:
+The model also creates `NumeroObservados` in Power Query by counting valid registrations across:
 
 ```text
-ano_mes        2026-04
-ano_semana     2026-14
-periodo        abr-2026
-semestre_desc  1º Semestre
-trimestre_desc 2º Trimestre
-```
-
-The table is used for monthly, weekly, and daily analysis throughout the report.
-
----
-
-## Employee Registration Analysis
-
-`d_lista_matriculas` consolidates the registrations used in:
-
-```text
-MatriculaObservador
 MatriculaObservado
 MatriculaObservado2
 MatriculaObservado3
 ```
 
-The public dimension contains synthetic employee names and stable sorting fields.
-
-The model also creates `NumeroObservados` in Power Query by counting valid registrations across the three observed-person columns. This field supports normalized measures on the Pessoas and DT_Matricula pages.
-
-A separate auxiliary Databricks notebook, `06_employee_dimension.ipynb`, documents a future normalized approach using an employee dimension and inspection-employee bridge.
+This column supports normalized measures on the Pessoas and DT_Matricula pages.
 
 ---
 
-## Theme
+## Theme and Screenshots
 
-The report visual identity is stored in:
+The report theme is stored in:
 
 ```text
 theme/esmat-theme.json
 ```
 
-The theme centralizes the public dashboard color palette and visual defaults so the PBIX can preserve a consistent appearance across cards, charts, matrices, filters, and drill-through pages.
-
----
-
-## Screenshots
-
-The `screenshots/` folder contains the six visible report pages, two hidden drill-through pages, and the semantic-model view.
-
-```text
-01-overview.png
-02-records.png
-03-observed-acts.png
-04-people.png
-05-job-roles.png
-06-record-search.png
-07-drill-through-record.png
-08-drill-through-employee.png
-09-data-model.png
-```
-
-The image inventory is documented in [`screenshots/README.md`](screenshots/README.md).
+The screenshots folder contains the six visible pages, two hidden drill-through pages, and the semantic-model view. The image inventory is documented in [`screenshots/README.md`](screenshots/README.md).
 
 ---
 
 ## Compatibility Decisions
 
-The public report prioritizes compatibility with the cloned PBIX rather than redesigning the semantic model or visuals.
+The public adaptation preserves:
 
-The following structures were intentionally preserved:
-
-- Existing table names;
-- Existing measure names;
+- Existing table and measure names;
 - `d_cabecalho[Tipo]` as the methodology field;
 - `Titulo` as the header-to-response key;
 - `ChaveUnica` as the response-to-classification key;
-- Existing drill-through pages and filter behavior;
+- Existing drill-through behavior;
 - Existing active and inactive relationships;
-- Existing page layout and visual structure;
+- Existing page layouts and visual interactions;
 - Existing employee-role logic;
-- Existing filter dimensions.
+- Existing filters and sort settings.
 
-The mock contains more synthetic segment values than the original report layout was designed to display. Some labels are therefore truncated, but the underlying values and calculations remain valid. The layout was intentionally not redesigned for this portfolio adaptation.
+The mock contains more segment values than the original layout was designed to show. Some labels are truncated, but the underlying values and calculations remain valid. The layout was intentionally not redesigned for the portfolio clone.
 
 ---
 
 ## Security and Confidentiality
 
-The public Power BI layer does not include:
+The public Power BI layer excludes:
 
 - Real employee names or registrations;
 - Production inspection records;
@@ -398,11 +331,9 @@ The public Power BI layer does not include:
 - Corporate email addresses;
 - Production URLs or workspace identifiers;
 - Catalog or schema names;
-- Credentials, access tokens, or configuration files;
-- Confidential questionnaire text;
+- Credentials, access tokens, or private configuration;
+- Confidential questionnaire content;
 - Production quality results.
-
-All visible values come from synthetic datasets created specifically for the public portfolio.
 
 ---
 
@@ -410,6 +341,7 @@ All visible values come from synthetic datasets created specifically for the pub
 
 ```text
 README.md
+├── e-smat-dashboard.pbix
 ├── dashboard-pages.md
 ├── data-model.md
 ├── measures.md
@@ -417,29 +349,17 @@ README.md
 └── screenshots/README.md
 ```
 
+- [`e-smat-dashboard.pbix`](e-smat-dashboard.pbix): downloadable Power BI report connected to synthetic data;
 - [`dashboard-pages.md`](dashboard-pages.md): visible and hidden report pages;
 - [`data-model.md`](data-model.md): semantic model, relationships, data types, and filter paths;
 - [`measures.md`](measures.md): DAX definitions and expected results;
 - [`key-validation-report.md`](key-validation-report.md): mock-data integrity checks;
-- [`screenshots/README.md`](screenshots/README.md): image inventory and documentation references.
+- [`screenshots/README.md`](screenshots/README.md): image inventory.
 
 ---
 
 ## Portfolio Scope
 
-This folder demonstrates the reporting layer of an end-to-end E-SMAT solution that connects Power Apps, SharePoint, Microsoft Graph API, Databricks, Delta Lake, data-quality controls, and Power BI.
+This folder demonstrates the reporting layer of an end-to-end E-SMAT solution connecting Power Apps, SharePoint, Microsoft Graph API, Databricks, Delta Lake, data-quality controls, and Power BI.
 
-The public Power BI implementation highlights:
-
-- Semantic-model design;
-- Header-detail relationships;
-- Questionnaire enrichment;
-- Safe and unsafe classification analysis;
-- DAX measures;
-- Time intelligence attributes;
-- Employee registration analysis;
-- Active and inactive relationship management;
-- Drill-through navigation;
-- Synthetic-data validation;
-- Theme-based visual consistency;
-- Public-safe portfolio documentation.
+The public implementation highlights semantic-model design, Power Query transformations, DAX measures, date analysis, employee registration analysis, active and inactive relationships, drill-through navigation, visual theming, synthetic-data validation, and public-safe technical documentation.
